@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>בית ההמפ בצוקים</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karantina:wght@400;700&family=Assistant:wght@400;600;700&display=swap">
+<style>
+/* Layout: one narrow reading column, a painted desert ridge as the opener,
+   a unit switch (house / studio) that swaps the unit-specific sections,
+   shared village + area chapters below, a night-sky band for the stars. */
+:root{
+  --plaster:#F2EEEA;      /* hemp-lime plaster walls */
+  --plaster-2:#E8E1DA;
+  --ink:#2B2421;
+  --ink-soft:#6A5D56;
+  --edom:#A9472F;         /* red Edom mountains at sunrise */
+  --acacia:#5F6B43;       /* the green that survives here */
+  --dusk:#4B4565;
+  --night:#161A2D;
+  --star:#F4E7C9;
+  --line:#D8CEC5;
+  --todo-bg:#FCE9A6;
+  --todo-fg:#5A4300;
+  --display:"Karantina","Assistant",system-ui,sans-serif;
+  --body:"Assistant","Segoe UI",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --plaster:#1D1A1B; --plaster-2:#28231F; --ink:#EEE6DE; --ink-soft:#B3A69C;
+  --edom:#E47A5C; --acacia:#A9B884; --dusk:#B6AEDA; --night:#0D1020; --star:#F4E7C9;
+  --line:#3A332E; --todo-bg:#4A3B08; --todo-fg:#FBE7A2; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --plaster:#1D1A1B; --plaster-2:#28231F; --ink:#EEE6DE; --ink-soft:#B3A69C;
+  --edom:#E47A5C; --acacia:#A9B884; --dusk:#B6AEDA; --night:#0D1020; --star:#F4E7C9;
+  --line:#3A332E; --todo-bg:#4A3B08; --todo-fg:#FBE7A2; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--plaster);color:var(--ink);font-family:var(--body);font-size:1.075rem;line-height:1.7;margin:0}
+.wrap{max-width:42rem;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.05;text-wrap:balance;margin:0}
+h2{font-size:clamp(2.4rem,7vw,3.2rem);color:var(--edom)}
+h3{font-size:1.75rem}
+p{margin:0}
+a{color:var(--edom);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--dusk);outline-offset:3px;border-radius:4px}
+.eyebrow{font-size:.8rem;letter-spacing:.12em;font-weight:700;color:var(--ink-soft)}
+.todo{background:var(--todo-bg);color:var(--todo-fg);padding:0 .3em;border-radius:3px;font-weight:600;font-size:.92em}
+
+/* hero */
+.hero{background:linear-gradient(180deg,#F6C99A 0%,#E9A27C 45%,#C9735E 100%);color:#2B1712;position:relative;overflow:hidden}
+.hero .wrap{padding-block:2.5rem 0;position:relative;z-index:1}
+.hero h1{font-size:clamp(4rem,18vw,7rem);color:#2B1712}
+.hero .lead{font-size:1.15rem;max-width:30rem;margin-top:.4rem}
+.hero .eyebrow{color:#5A2A1E}
+.ridge{display:block;width:100%;height:auto;margin-top:-1rem}
+.ridge .far{fill:#A9472F}.ridge .near{fill:#6B2E22}.ridge .ground{fill:var(--plaster)}
+
+/* switch */
+.switch{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.4rem;position:relative;z-index:2}
+.switch button{font:inherit;cursor:pointer;text-align:start;border:2px solid var(--line);background:var(--plaster);color:var(--ink);border-radius:14px;padding:.8rem 1rem;display:flex;flex-direction:column;gap:.1rem}
+.switch b{font-family:var(--display);font-size:1.9rem;line-height:1}
+.switch small{color:var(--ink-soft);font-size:.9rem;line-height:1.3}
+.switch button[aria-pressed="true"]{border-color:var(--edom);background:var(--plaster-2);box-shadow:0 0 0 1px var(--edom) inset}
+body[data-unit="house"] [data-unit="studio"],body[data-unit="studio"] [data-unit="house"]{display:none}
+
+/* nav */
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--plaster);border-bottom:1px solid var(--line);margin-top:1.5rem}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--plaster)}
+nav.toc ul{list-style:none;margin:0;padding-block:.55rem;display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none}
+nav.toc a{display:block;white-space:nowrap;text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem;padding:.25rem .75rem;border-radius:999px;border:1px solid var(--line)}
+nav.toc a:hover{border-color:var(--edom);color:var(--edom)}
+
+main section{padding-block:2.75rem 0;display:flex;flex-direction:column;gap:1rem;scroll-margin-top:3.5rem}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.facts div{background:var(--plaster);padding:.75rem .9rem;display:flex;flex-direction:column}
+.facts span{font-size:.78rem;letter-spacing:.08em;color:var(--ink-soft);font-weight:700}
+.facts b{font-size:1.15rem;font-variant-numeric:tabular-nums}
+
+ol.route{margin:0;padding:0;list-style:none;counter-reset:r;display:flex;flex-direction:column;gap:.6rem}
+ol.route li{counter-increment:r;display:grid;grid-template-columns:2rem 1fr;gap:.6rem;align-items:start}
+ol.route li::before{content:counter(r);font-family:var(--display);font-size:1.6rem;line-height:1.1;color:var(--edom);text-align:center;border:1.5px solid var(--edom);border-radius:50%;width:2rem;height:2rem;line-height:1.85rem}
+.btnrow{display:flex;flex-wrap:wrap;gap:.5rem}
+.btn{display:inline-block;text-decoration:none;font-weight:700;background:var(--edom);color:var(--plaster);padding:.5rem 1rem;border-radius:10px}
+.btn.ghost{background:transparent;color:var(--edom);border:1.5px solid var(--edom)}
+
+figure{margin:0}
+figure img{display:block;width:100%;height:auto;border-radius:10px}
+figcaption{font-size:.88rem;color:var(--ink-soft);margin-top:.3rem}
+.photo-slot{border:2px dashed var(--line);border-radius:10px;padding:1.2rem;text-align:center;color:var(--ink-soft);font-size:.92rem}
+
+details{border-top:1px solid var(--line)}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;padding:.8rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;font-weight:700;font-size:1.1rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--display);font-size:1.8rem;line-height:1;color:var(--edom)}
+details[open] summary::after{content:"–"}
+details .body{padding-bottom:1rem;display:flex;flex-direction:column;gap:.6rem}
+details ul,section ul{margin:0;padding-inline-start:1.2rem;display:flex;flex-direction:column;gap:.25rem}
+
+.note{border-inline-start:4px solid var(--acacia);background:var(--plaster-2);padding:.75rem 1rem;border-radius:0 8px 8px 0}
+.warn{border-inline-start-color:var(--edom)}
+
+.places{display:flex;flex-direction:column;gap:0}
+.place{display:grid;grid-template-columns:1fr auto;gap:.15rem 1rem;padding:.75rem 0;border-bottom:1px solid var(--line)}
+.place h3{font-family:var(--body);font-size:1.08rem;font-weight:700}
+.place .dist{font-size:.85rem;color:var(--ink-soft);white-space:nowrap;font-variant-numeric:tabular-nums}
+.place p{grid-column:1/-1;color:var(--ink-soft);font-size:.98rem}
+.tel{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+
+.night{background:var(--night);color:var(--star);margin-top:3rem;position:relative;overflow:hidden}
+.night .wrap{padding-block:3rem;position:relative;z-index:1;display:flex;flex-direction:column;gap:1rem}
+.night h2{color:var(--star)}
+.night a{color:var(--star)}
+.night canvas{position:absolute;inset:0;width:100%;height:100%}
+
+.contacts{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.contacts div{border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;display:flex;flex-direction:column;gap:.2rem}
+.contacts b{font-family:var(--display);font-size:2rem;line-height:1}
+.contacts .btnrow{margin-top:.3rem}
+@media (max-width:420px){.contacts{grid-template-columns:1fr}}
+.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.35rem}
+.checklist label{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer}
+.checklist input{margin-top:.45rem;accent-color:var(--edom);width:1.05rem;height:1.05rem;flex:none}
+footer{padding-block:3rem 3rem;color:var(--ink-soft);text-align:center}
+footer .sig{font-family:var(--display);font-size:2.4rem;color:var(--edom);line-height:1}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">צוקים · הערבה התיכונה</p>
+    <h1>בית ההמפ בצוקים</h1>
+    <p class="lead">איזה כיף שבאתם! כאן תמצאו את כל מה שצריך לפני שמגיעים ובזמן השהייה: איך נוסעים, איך הבית עובד, ומה כדאי לעשות במדבר.</p>
+  </div>
+  <svg class="ridge" viewBox="0 0 800 170" preserveAspectRatio="none" aria-hidden="true">
+    <circle cx="560" cy="88" r="38" fill="#FBE3B8"/>
+    <path class="far" d="M0 110 L70 86 L130 98 L210 62 L290 90 L360 72 L430 96 L520 70 L610 92 L700 66 L800 88 L800 170 L0 170Z"/>
+    <path class="near" d="M0 140 L120 128 L200 136 L320 116 L420 132 L470 126 L520 134 L640 120 L800 132 L800 170 L0 170Z"/>
+    <path class="ground" d="M0 160 L800 152 L800 170 L0 170Z"/>
+  </svg>
+</header>
+
+<div class="wrap">
+  <p class="eyebrow" style="margin-top:1rem">איפה אתם מתארחים?</p>
+  <div class="switch" role="group" aria-label="בחירת יחידה">
+    <button type="button" id="pick-house" data-pick="house" aria-pressed="true"><b>הבית הגדול</b><small>4 חדרים, בריכה, עד 11 אורחים</small></button>
+    <button type="button" id="pick-studio" data-pick="studio" aria-pressed="false"><b>סטודיו 36</b><small>יחידת הגג, 2 מרפסות, עד 4</small></button>
+  </div>
+</div>
+
+<nav class="toc" aria-label="ניווט בדף">
+  <div class="wrap"><ul>
+    <li><a href="#arrive">הגעה</a></li>
+    <li><a href="#home">איך הכל עובד</a></li>
+    <li><a href="#safety">בטיחות</a></li>
+    <li><a href="#village">הישוב</a></li>
+    <li><a href="#shop">קניות ואוכל</a></li>
+    <li><a href="#todo">מה עושים</a></li>
+    <li><a href="#leave">עזיבה</a></li>
+    <li><a href="#contact">טלפונים</a></li>
+  </ul></div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ===== at a glance ===== -->
+  <section aria-label="בקצרה" style="padding-top:1.5rem">
+    <div class="facts" data-unit="house">
+      <div><span>כניסה</span><b>16:00–23:00</b></div>
+      <div><span>עזיבה</span><b>עד 12:00</b></div>
+      <div><span>Wi-Fi</span><b><mark class="todo">שם / סיסמה</mark></b></div>
+      <div><span>שאלות</span><b>הילה ואסף</b></div>
+    </div>
+    <div class="facts" data-unit="studio">
+      <div><span>כניסה</span><b>מ־16:00</b></div>
+      <div><span>עזיבה</span><b>עד 11:00</b></div>
+      <div><span>Wi-Fi</span><b><mark class="todo">שם / סיסמה</mark></b></div>
+      <div><span>מדרגות</span><b>26 עד היחידה</b></div>
+    </div>
+  </section>
+
+  <!-- ===== arrival ===== -->
+  <section id="arrive">
+    <h2>איך מגיעים</h2>
+    <ol class="route">
+      <li><span>נכנסים לצוקים ועוברים את שער הישוב הצהוב.</span></li>
+      <li><span>עוברים את הכיכר הראשונה וממשיכים ישר עם הכביש. הכביש מטפס לצוק.</span></li>
+      <li><span>בקצה העלייה יש כיכר שנייה. בה פונים ימינה.</span></li>
+      <li><span>אנחנו הבית השלישי מצד ימין. הגעתם!</span></li>
+    </ol>
+    <div class="btnrow">
+      <a class="btn" href="https://maps.app.goo.gl/m83yzndvvKbuXkYb9" target="_blank" rel="noopener">פתיחה בגוגל מפות</a>
+      <a class="btn ghost" href="https://waze.com/ul?q=%D7%A6%D7%95%D7%A7%D7%99%D7%9D" target="_blank" rel="noopener">Waze לצוקים</a>
+    </div>
+    <p class="note">החנייה: <mark class="todo">איפה מחנים</mark>. בדרך מהצפון התחנה האחרונה לתדלוק ולקניות גדולות היא <mark class="todo">למשל צומת הערבה / עין יהב</mark>.</p>
+    <figure data-unit="house">
+      <img src="../assets/images/house-front.jpg" alt="חזית בית ההמפ: קשת לבנה, שביל ועצים צעירים" loading="lazy" width="1400" height="1050">
+      <figcaption>ככה נראה הבית מהשביל. בחצר שישה עצים: קרמבולה, אינגה מתוקה, סיגלון, תאנה, תות עץ… נשאיר לכם לנחש מי הוא מי.</figcaption>
+    </figure>
+    <div data-unit="studio" class="note">הסטודיו נמצא בקומה העליונה, מעל הבית שלנו, עם כניסה פרטית. עולים <b>26 מדרגות</b>, אז אם יש מזוודות כבדות תגידו לנו ונעזור. המפתח: <mark class="todo">איפה המפתח / קוד</mark>.</div>
+    <div data-unit="studio" class="photo-slot">כאן תבוא תמונה של המדרגות והכניסה לסטודיו (<code>images/studio-entrance.jpg</code>)</div>
+  </section>
+
+  <!-- ===== how things work: HOUSE ===== -->
+  <section id="home" data-unit="house">
+    <h2>איך הבית עובד</h2>
+    <p>בנינו את הבית במו ידינו מ<b>המפ</b> (קנבוס תעשייתי עם סיד), כשהיינו הבית הרביעי בארץ שנבנה כך. הקירות "נושמים": הם מבודדים ומווסתים לחות, ותרגישו את זה ברגע שתיכנסו. הטיח טבעי, אין רעלים, וגם חומרי הניקוי אקולוגיים.</p>
+
+    <details open><summary>הקירור: מצנן מדברי, לא מזגן</summary><div class="body">
+      <p>התקנו שתי מערכות <b>desert cooler</b>: מאוורר גדול שזורק אוויר דרך "מטפחת" לחה. ביובש של הערבה זה מקרר בנעימות, לא מצנן אתכם, ולא צריך לסגור דלתות.</p>
+      <ul>
+        <li>משאירים דלוק כל הזמן. אם צריך עוד, מדליקים את מאווררי התקרה.</li>
+        <li>בלילה לפעמים קריר ונעים להתכסות, אבל פוך לא תצטרכו.</li>
+        <li>בימים לחים מאוד (נדיר, פעם או פעמיים בשנה) המצנן פחות עובד. לשם כך יש מזגן מרכזי באזור הציבורי, ואפשר לישון בסלון.</li>
+      </ul>
+    </div></details>
+
+    <details><summary>הבריכה</summary><div class="body">
+      <p>עומק 1.22 מ׳, פתוחה בעונה החמה. יש מצופים, תביאו בגדי ים, מגבות, כובע וקרם הגנה.</p>
+      <ul>
+        <li>שוטפים רגליים לפני שנכנסים (יש פיילה ליד).</li>
+        <li>נכנסים רק בסולם. <b>לא קופצים.</b></li>
+        <li>ילדים בבריכה רק בהשגחה. כשאין השגחה, מוציאים את הסולם.</li>
+        <li>השימוש באחריותכם. לא נכנסים עם תודעה מעורפלת.</li>
+      </ul>
+      <p>דף תפעול מפורט מחכה ליד הבריכה. <mark class="todo">אפשר להוסיף כאן סרטון קצר</mark></p>
+    </div></details>
+
+    <details><summary>המטבח</summary><div class="body">
+      <p>אנחנו משפחה שאוהבת לבשל, אז יש הכל: מכונת פסטה, מכונת גלידה, רביולי, מייבש מזון, תנור, גז, בלנדר, מיקסר, מעבד מזון ומכונת קפה.</p>
+      <ul>
+        <li><b>אין מיקרוגל.</b> אנחנו מחממים על אש.</li>
+        <li>אנחנו לא אוכלים בשר ועוף בבית. אם אתם כן, השתמשו בבקשה בכלי הזכוכית או בחד־פעמי.</li>
+        <li>המים מהברז עוברים מערכת סינון והעשרה מתקדמת. אין צורך לקנות מים מינרליים (ואסף ישמח לספר עליה).</li>
+      </ul>
+    </div></details>
+
+    <details><summary>טאבון, מנגל ומדורה</summary><div class="body">
+      <p>מנגל גז גדול, טאבון לפיצה ופינת מדורה אחרי הדשא, עם משטחי עץ להבעיר בהדרגה.</p>
+      <p class="note warn">לפני הדלקת הטאבון בפעם הראשונה, דברו עם אסף. <mark class="todo">קישור לסרטון הדלקה</mark></p>
+    </div></details>
+
+    <details><summary>בחוץ: דק, פינג־פונג, פינות ישיבה</summary><div class="body">
+      <p><b>פינג־פונג:</b> מסירים את הכיסוי, משחררים את שני המעצורים בצדדים ופותחים בעדינות. אין שותף? משאירים צד אחד מורם ומתאמנים לבד. כדורים ומחבטים בכוננית שליד, בארון האמצעי.</p>
+      <p>פינת ישיבה ופינת אוכל עם מאווררים, ודשא לקרוקט.</p>
+      <p>מתגי התאורה בחוץ נמצאים <b>בסלון</b>, ועל כל מתג כתוב מה הוא מדליק.</p>
+    </div></details>
+
+    <details><summary>החתולה (והבן שלה)</summary><div class="body">
+      <p>יכול להיות שתיכנס חתולה קטנה, בהירה ועדינה שאוהבת ליטופים, ולאחרונה גם הבן שלה. היא מריחה אוכל שנשאר על השיש.</p>
+      <ul>
+        <li>לא חייבים להכניס אותה. רוצים שתצא? מובילים אותה החוצה דרך חדר הכביסה.</li>
+        <li>אוכל שמים לה במרפסת של חדר הכביסה (כדי לא למשוך נמלים). הקופסה בחדר הכביסה, בארון התחתון משמאל.</li>
+        <li>אם בחרתם שתישאר בפנים, תנו לה לצאת בבוקר או כשהיא עומדת ליד דלת.</li>
+      </ul>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+        <img src="../assets/images/cat-1.jpg" alt="החתולה נחה על ספסל" loading="lazy" style="border-radius:8px">
+        <img src="../assets/images/cat-2.jpg" alt="החתולה במטבח" loading="lazy" style="border-radius:8px">
+      </div>
+    </div></details>
+
+    <details><summary>טלוויזיה, אינטרנט ומשחקים</summary><div class="body">
+      <p>אין אצלנו טלוויזיה, בכוונה. במקום זה יש פינה מלאה במשחקי קופסה, משחקים לגיל הרך בסלון, ורמקולים שאפשר להתחבר אליהם.</p>
+      <p>רוצים ערב סרט? תביאו לפטופ ונשאיר לכם מקרן ומסך. יש אינטרנט ופינת עבודה נוחה.</p>
+      <p>בבקשה החזירו את כל החלקים למשחקים, והשאירו את הדברים בחדרי הילדים במקומם. הם חשובים להם.</p>
+    </div></details>
+
+    <details><summary>דברים קטנים שכדאי לדעת</summary><div class="body">
+      <ul>
+        <li><b>אבקה לבנה על הרצפה?</b> זה טלק. הוא מרחיק נמלים בלי רעלים, אז אל תנגבו אותו.</li>
+        <li>הציוד הפרטי שלנו בחדר שבתוך יחידת ההורים. הוא לא נעול, ואנחנו סומכים עליכם.</li>
+        <li>ההשקיה: נתאם איתכם מראש אם חבר יבוא להשקות או שתשקו בעצמכם.</li>
+        <li>הפסקת חשמל: התקשרו או שלחו וואטסאפ לאסף ונגיד לכם מה לבדוק.</li>
+      </ul>
+    </div></details>
+  </section>
+
+  <!-- ===== how things work: STUDIO ===== -->
+  <section id="home-studio" data-unit="studio">
+    <h2 id="home-s">איך הסטודיו עובד</h2>
+    <p>חלל אחד מואר של 40 מ״ר ועוד 30 מ״ר מרפסות, בקומה העליונה של הבית שבנינו בעצמנו מהמפ וחומרים טבעיים. ממרפסת אחת רואים את הזריחה מעל הרי אדום, ומהשנייה את השקיעה מעל הוואדי.</p>
+    <div class="photo-slot">כאן תבואנה 2–3 תמונות של הסטודיו והמרפסות (<code>images/studio-1.jpg</code> וכו׳)</div>
+
+    <details open><summary>שינה</summary><div class="body">
+      <p>מיטה זוגית ועוד 3 מזרנים למשפחה או לחברים (עד 4 אורחים). עריסה לתינוק לפי בקשה, תגידו לנו מראש.</p>
+      <p>מצעים נוספים: <mark class="todo">איפה</mark></p>
+    </div></details>
+    <details><summary>מטבחון</summary><div class="body">
+      <p>מקרר, כיריים, מיקרוגל, מכונת קפה וקומקום. יש כל מה שצריך לבישול פשוט.</p>
+      <p>המים מהברז מסוננים וטובים לשתייה. <mark class="todo">לוודא שזה נכון גם בסטודיו</mark></p>
+    </div></details>
+    <details><summary>מזגן וכביסה</summary><div class="body">
+      <p>מזגן חזק שמקרר את כל היחידה בקלות. השלט: <mark class="todo">איפה</mark>. בלילות החורף במדבר קר, אז <mark class="todo">חימום / שמיכות נוספות</mark>.</p>
+      <p>מכונת כביסה ביחידה, חופשי לשימוש.</p>
+    </div></details>
+    <details><summary>הבריכה והחצר (מאי–ספטמבר)</summary><div class="body">
+      <p>בעונה החמה הבריכה בחצר שלנו משותפת לנו ולכם, ויש גם שולחן פינג־פונג.</p>
+      <ul>
+        <li>שוטפים רגליים לפני שנכנסים, ונכנסים רק בסולם. לא קופצים.</li>
+        <li>ילדים בבריכה רק בהשגחה.</li>
+        <li>שעות שקטות בבריכה: <mark class="todo">אם יש</mark></li>
+      </ul>
+    </div></details>
+    <details><summary>שקט ואור</summary><div class="body">
+      <p>אנחנו גרים מתחת, והשכנים קרובים. אחרי 22:00 מנמיכים מוזיקה ודיבורים במרפסת. כבו את אורות המרפסת כשאתם לא שם, ככה גם תראו יותר כוכבים.</p>
+    </div></details>
+  </section>
+
+  <!-- ===== safety ===== -->
+  <section id="safety">
+    <h2>בטיחות במדבר</h2>
+    <p class="note warn" data-unit="studio"><b>מרחב מוגן:</b> הממ״ד נמצא בבית שלנו בקומה למטה, משותף לנו ולכם. <mark class="todo">איך נכנסים אליו בלילה</mark>. בהתרעה פשוט רדו ודפקו.</p>
+    <p class="note warn" data-unit="house"><b>מרחב מוגן:</b> <mark class="todo">איפה הממ״ד / המקלט הקרוב</mark></p>
+    <ul>
+      <li><b>שיטפונות:</b> אם יורד גשם, גם רחוק בצפון, לא נכנסים לוואדיות ולא חוצים ערוץ זורם. שיטפון מגיע פתאום, גם תחת שמיים כחולים.</li>
+      <li><b>חום:</b> בקיץ יוצאים לטייל רק מוקדם בבוקר או שעה לפני השקיעה. לכל אחד לפחות 2 ליטר מים, כובע ונעליים סגורות.</li>
+      <li><b>בלילה:</b> הולכים עם פנס, ומנערים נעליים שנשארו בחוץ (עקרבים אוהבים פינות חשוכות).</li>
+      <li><b>אש:</b> לא משאירים מדורה בלי השגחה, ומכבים במים בסוף. מטף: <mark class="todo">איפה</mark></li>
+    </ul>
+    <div class="facts">
+      <div><span>מד״א</span><b class="tel">101</b></div>
+      <div><span>משטרה</span><b class="tel">100</b></div>
+      <div><span>כיבוי אש</span><b class="tel">102</b></div>
+      <div><span>מרפאה קרובה</span><b><mark class="todo">שם + טלפון</mark></b></div>
+    </div>
+  </section>
+
+  <!-- ===== village ===== -->
+  <section id="village">
+    <h2>צוקים, הישוב</h2>
+    <p>צוקים נולד כמה קרוואנים על צוק באמצע המדבר. בהתחלה לא היו מדרכות, לא פנסי רחוב ולא תחנת דלק. כשעברנו לכאן ב־2013 וגרנו בקרוואן, עוד התווכחו בישוב אם להדליק תאורת רחוב בכלל, כי אנשים אהבו לראות כוכבים. לאט לאט נוספו צרכנייה, תחנת דלק, בית קפה, פיצה ואוכל הודי.</p>
+    <p>מסתובבים בישוב ורואים בתים שנבנו בכל שיטה אפשרית. זה כמו תערוכה של בנייה, ורוב הבונים ישמחו לספר. (אנחנו חשבנו על הבית שלנו שלוש שנים לפני שהתחלנו.)</p>
+    <p class="note"><b>חיה ותן לחיות.</b> אנשים באו לכאן בשביל שקט, אז אין מסיבות ולא מזמינים חברים להמולה. מוזיקה בעוצמה סבירה, ובסביבות 22:00 מנמיכים. הישוב רגיש לזיהום אור, אז מכבים את אורות החצר כשמסיימים.</p>
+    <h3>כפר האמנים</h3>
+    <p>במרכז הישוב יש גלריות שפתוחות רוב הזמן. את האמנים עצמם פוגשים בעיקר <b>בחמישי בערב ובשישי בבוקר עד הצהריים</b>, ואז יש בכפר אווירה מקסימה. בשאר הזמן כדאי לתאם.</p>
+  </section>
+
+  <!-- ===== shop & eat ===== -->
+  <section id="shop">
+    <h2>קניות ואוכל</h2>
+    <div class="places">
+      <div class="place"><h3>שושקה, הצרכנייה שלנו</h3><span class="dist">בכפר האמנים</span>
+        <p>כן, זו החנות שלנו 🙂 שייקים מצוינים, ירקות ופירות מחקלאי הערבה (חוץ מיולי–אוגוסט), ביצי חופש מקומיות, תחליפי חלב ומוצרי היגיינה. בלי בשר ומוצרי חלב. כל יום 10:00–14:00 ו־17:00–20:00, בשישי ובערבי חג 10:00–14:30. רוצים שפירות, ירקות או פירות קפואים יחכו לכם במקרר? תגידו לנו לפני שאתם מגיעים. <a href="https://shushka.co.il" target="_blank" rel="noopener">shushka.co.il</a> <span class="tel">054-4771692</span></p></div>
+      <div class="place"><h3>אלונית</h3><span class="dist">בכניסה לישוב</span>
+        <p>מוצרי חלב, לחם, מים, גחלים וכספומט. פתוח כל היום, ובשעות הלילה המאוחרות מזמינים מחלון העובד.</p></div>
+      <div class="place"><h3>מלא הטנא, עין יהב</h3><span class="dist">כ־20 דק׳</span>
+        <p>משק אורגני. נכנסים למושב ופונים מיד ימינה, יש שילוט. רונית <span class="tel">052-8360088</span></p></div>
+      <div class="place"><h3>משק אלדר, צופר</h3><span class="dist">כ־15 דק׳</span>
+        <p>שוק ירקות ופירות מקסים בחמישי ושישי.</p></div>
+      <div class="place"><h3>מחסני השוק, עין יהב</h3><span class="dist">כ־20 דק׳</span>
+        <p>הקנייה הגדולה. יש גם מכולות בפארן ובצופר, כ־15 דק׳.</p></div>
+    </div>
+    <h3>לאכול בחוץ</h3>
+    <p>בכפר האמנים: קליית קפה, אוכל הודי ופיצה. בכניסה לישוב: ארומה, מעדנייה ומסעדת הפרם אורסולה. בעין יהב: הפאב של מכוורת פורת (המבורגרים ופיצות).</p>
+  </section>
+
+  <!-- ===== things to do ===== -->
+  <section id="todo">
+    <h2>מה עושים פה</h2>
+    <p class="note"><b>חובה:</b> שעה לפני השקיעה יוצאים למדבר. מהבית זו דקת הליכה עד שפת הצוק, ומשם שביל יורד לוואדי צוקים. קחו מים, כי השקט של הוואדי מפתה להישאר.</p>
+    <div class="places">
+      <div class="place"><h3>נחל ברק</h3><span class="dist">מסלול הליכה</span><p>רובו מוצל. מתאים גם לימים חמים.</p></div>
+      <div class="place"><h3>מרכז ויידור, חצבה</h3><span class="dist">משפחות</span><p>מרכז מבקרים עם הפעלות מקסימות לילדים. <a href="https://www.vidor-center.co.il/" target="_blank" rel="noopener">vidor-center.co.il</a></p></div>
+      <div class="place"><h3>פארק ספיר</h3><span class="dist">אחר הצהריים</span><p>דשא, עצים, חיות ואגם. טוב לפיקניק, פריזבי ומשחקי קופסה כשהשמש יורדת.</p></div>
+      <div class="place"><h3>מכוורת פורת, עין יהב</h3><span class="dist">סיור + פאב</span><p>מרכז מבקרים וסיורים. <a href="https://www.porat.farm/" target="_blank" rel="noopener">porat.farm</a></p></div>
+      <div class="place"><h3>גן הגרוטאן, עין יהב</h3><span class="dist">חצי שעה, חינם</span><p>יצירות מגרוטאות בחצר של משפחה מהמושב. מתאמים בטלפון <span class="tel">052-3666232</span></p></div>
+      <div class="place"><h3>אילת והדרך אליה</h3><span class="dist">שעה וקצת</span><p>חוות יטבתה, חוף הנסיכה לשנורקלים, ריף הדולפינים, שמורת האלמוגים, ויום שלם בחוף של מוש.</p></div>
+    </div>
+    <p>עוד ג׳יפים, נינג׳ה, פיינטבול ומסעדות באתר <a href="https://goarava.co.il" target="_blank" rel="noopener">goarava.co.il</a></p>
+  </section>
+</main>
+
+<section class="night" id="stars" aria-labelledby="stars-h">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <h2 id="stars-h">הלילה כאן</h2>
+    <p>כבו את אורות החצר (המתגים בסלון), שכבו על הדק ותנו לעיניים עשר דקות להתרגל. בלילה בלי ירח רואים את שביל החלב.</p>
+    <p><b>סיור כוכבים עם אלון מעין יהב:</b> חובב אסטרונומיה מגיל צעיר, עם לייזר, הסברים ותה ועוגיות לקטנים. היינו אצלו ונהנינו. <span class="tel">051-2470365</span></p>
+    <p><b>ארז:</b> סיורי כוכבים וטיולי ג׳יפים, מומלץ מאוד. <span class="tel">052-3677317</span></p>
+  </div>
+</section>
+
+<main class="wrap">
+  <section id="leave">
+    <h2>לפני שנוסעים</h2>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="c1"> שוטפים כלים או מכניסים למדיח</label></li>
+      <li><label><input type="checkbox" id="c2"> זבל ומיחזור: <mark class="todo">איפה הפחים</mark></label></li>
+      <li><label><input type="checkbox" id="c3"> מכבים אורות בחוץ ובפנים</label></li>
+      <li><label><input type="checkbox" id="c4"> <span data-unit="house">משאירים את המצנן דלוק, מכבים את המזגן המרכזי</span><span data-unit="studio">מכבים מזגן</span></label></li>
+      <li><label><input type="checkbox" id="c5"> משחקים חוזרים לקופסאות, כל החלקים</label></li>
+      <li><label><input type="checkbox" id="c6"> המפתח: <mark class="todo">איפה משאירים</mark></label></li>
+    </ul>
+    <p data-unit="house">אם מתאים לכם, אפשר לפעמים להישאר עד 13:00. שאלו אותנו מראש.</p>
+    <p>נהניתם? ביקורת באיירבנב עוזרת לנו מאוד, ואם משהו לא עבד, נשמח שתגידו לנו ישירות כדי שנתקן.</p>
+  </section>
+
+  <section id="contact">
+    <h2>אנחנו כאן</h2>
+    <div class="contacts">
+      <div><b>הילה</b><span class="tel">054-699-5623</span>
+        <div class="btnrow"><a class="btn" href="https://wa.me/972546995623" target="_blank" rel="noopener">וואטסאפ</a><a class="btn ghost" href="tel:+972546995623">חיוג</a></div></div>
+      <div><b>אסף</b><span class="tel">052-366-6260</span>
+        <div class="btnrow"><a class="btn" href="https://wa.me/972523666260" target="_blank" rel="noopener">וואטסאפ</a><a class="btn ghost" href="tel:+972523666260">חיוג</a></div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p class="sig">חיבוק גדול</p>
+  <p>אסף, הילה, עדן, דביר והודיה</p>
+</footer>
+
+<script>
+(function(){
+  var units=["house","studio"];
+  function setUnit(u){
+    document.body.setAttribute("data-unit",u);
+    document.querySelectorAll("[data-pick]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.pick===u))});
+    var a=document.querySelector('nav.toc a[href^="#home"]'); if(a) a.setAttribute("href",u==="studio"?"#home-studio":"#home");
+    try{localStorage.setItem("unit",u)}catch(e){}
+  }
+  var h=location.hash.slice(1), saved=null;
+  try{saved=localStorage.getItem("unit")}catch(e){}
+  setUnit(units.indexOf(h)>-1?h:(units.indexOf(saved)>-1?saved:"house"));
+  addEventListener("hashchange",function(){var h=location.hash.slice(1);if(units.indexOf(h)>-1)setUnit(h)});
+  document.querySelectorAll("[data-pick]").forEach(function(b){b.addEventListener("click",function(){setUnit(b.dataset.pick)})});
+
+  // a quiet field of stars
+  var c=document.getElementById("sky"),x=c.getContext("2d");
+  function draw(){
+    var r=c.getBoundingClientRect(),d=window.devicePixelRatio||1;
+    c.width=r.width*d;c.height=r.height*d;x.scale(d,d);
+    var n=Math.round(r.width*r.height/1800),s=7;
+    function rnd(){s=(s*16807)%2147483647;return s/2147483647}
+    for(var i=0;i<n;i++){x.globalAlpha=.25+rnd()*.6;x.fillStyle="#F4E7C9";x.beginPath();x.arc(rnd()*r.width,rnd()*r.height,rnd()*1.2+.2,0,6.3);x.fill()}
+  }
+  draw();addEventListener("resize",function(){x.setTransform(1,0,0,1,0,0);draw()});
+})();
+</script>
+</body>
+</html>
