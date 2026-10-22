@@ -16,13 +16,16 @@
       x.globalAlpha=still?s.a:Math.max(.08,s.a+Math.sin(t/1000*s.v+s.p)*.3);
       x.beginPath();x.arc(s.x,s.y,s.r,0,6.3);x.fill()}
     if(!still){
-      if(!meteor&&Math.random()<.004)meteor={x:Math.random()*w,y:Math.random()*h*.4,l:0};
+      if(!meteor&&Math.random()<.008){
+        // start where the reader can see it: the slice of the band inside the viewport
+        var r=c.getBoundingClientRect(),top=Math.max(0,-r.top),bot=Math.min(h,innerHeight-r.top);
+        if(bot-top>80)meteor={x:w*.3+Math.random()*w*.7,y:top+Math.random()*(bot-top)*.5,l:0};}
       if(meteor){meteor.l+=14;var dx=-meteor.l*.9,dy=meteor.l*.45;
         var g=x.createLinearGradient(meteor.x,meteor.y,meteor.x+dx,meteor.y+dy);
         g.addColorStop(0,"rgba(244,231,201,0)");g.addColorStop(1,"rgba(244,231,201,.9)");
-        x.globalAlpha=1;x.strokeStyle=g;x.lineWidth=1.5;x.beginPath();
+        x.globalAlpha=1;x.strokeStyle=g;x.lineWidth=2;x.beginPath();
         x.moveTo(meteor.x+dx*.6,meteor.y+dy*.6);x.lineTo(meteor.x+dx,meteor.y+dy);x.stroke();
-        if(meteor.l>260)meteor=null}
+        if(meteor.l>320)meteor=null}
       requestAnimationFrame(frame)}
   }
   setup();addEventListener("resize",setup);requestAnimationFrame(frame);
