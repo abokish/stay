@@ -8,148 +8,164 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karantina:wght@400;700&family=Assistant:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karantina:wght@400;700&family=Assistant:wght@400;600;700&family=Amatic+SC:wght@700&display=swap">
 <style>
-/* Layout: one narrow reading column, a painted desert ridge as the opener,
-   a unit switch (house / studio) that swaps the unit-specific sections,
-   shared village + area chapters below, a night-sky band for the stars. */
+/* Layout: the same desert day as the marketing site, tuned for a tool —
+   a dawn opener with the unit switch, one sand reading column whose
+   sections are labelled by when in the stay you need them, and a
+   night band at the end for stars, check-out and phones. No content
+   waits on scroll animation. Deliberately a single look. */
 :root{
-  --plaster:#F2EEEA;      /* hemp-lime plaster walls */
-  --plaster-2:#E8E1DA;
-  --ink:#2B2421;
-  --ink-soft:#6A5D56;
-  --edom:#A9472F;         /* red Edom mountains at sunrise */
-  --acacia:#5F6B43;       /* the green that survives here */
-  --dusk:#4B4565;
-  --night:#161A2D;
-  --star:#F4E7C9;
-  --line:#D8CEC5;
-  --todo-bg:#FCE9A6;
-  --todo-fg:#5A4300;
+  --dawn-1:#F9E1C2; --dawn-2:#F2AE86; --dawn-3:#D9785E;
+  --sand:#EBD5AF; --sand-2:#E2C597; --ochre:#D69A5B;
+  --night:#121429; --dusk:#3B2C52;
+  --ink:#2E1D14; --ink-soft:#6B4E3A;
+  --clay:#A93F27; --glow:#F6B565; --cream:#FFF1DF; --star:#F4E7C9;
+  --line:rgba(46,29,20,.22);
   --display:"Karantina","Assistant",system-ui,sans-serif;
   --body:"Assistant","Segoe UI",Arial,sans-serif;
+  --hand:"Amatic SC","Karantina",cursive;
+  color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --plaster:#1D1A1B; --plaster-2:#28231F; --ink:#EEE6DE; --ink-soft:#B3A69C;
-  --edom:#E47A5C; --acacia:#A9B884; --dusk:#B6AEDA; --night:#0D1020; --star:#F4E7C9;
-  --line:#3A332E; --todo-bg:#4A3B08; --todo-fg:#FBE7A2; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --plaster:#1D1A1B; --plaster-2:#28231F; --ink:#EEE6DE; --ink-soft:#B3A69C;
-  --edom:#E47A5C; --acacia:#A9B884; --dusk:#B6AEDA; --night:#0D1020; --star:#F4E7C9;
-  --line:#3A332E; --todo-bg:#4A3B08; --todo-fg:#FBE7A2; color-scheme:dark}
-
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{background:var(--plaster);color:var(--ink);font-family:var(--body);font-size:1.075rem;line-height:1.7;margin:0}
-.wrap{max-width:42rem;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.05;text-wrap:balance;margin:0}
-h2{font-size:clamp(2.4rem,7vw,3.2rem);color:var(--edom)}
-h3{font-size:1.75rem}
+body{background:var(--sand);color:var(--ink);font-family:var(--body);font-size:1.08rem;line-height:1.7;margin:0;overflow-x:hidden}
+.wrap{max-width:44rem;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:.95;text-wrap:balance;margin:0}
+h2{font-size:clamp(3rem,11vw,4.4rem);color:var(--clay)}
+h3{font-size:1.8rem}
 p{margin:0}
-a{color:var(--edom);text-underline-offset:3px}
-a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--dusk);outline-offset:3px;border-radius:4px}
-.eyebrow{font-size:.8rem;letter-spacing:.12em;font-weight:700;color:var(--ink-soft)}
-.todo{background:var(--todo-bg);color:var(--todo-fg);padding:0 .3em;border-radius:3px;font-weight:600;font-size:.92em}
-
-/* hero */
-.hero{background:linear-gradient(180deg,#F6C99A 0%,#E9A27C 45%,#C9735E 100%);color:#2B1712;position:relative;overflow:hidden}
-.hero .wrap{padding-block:2.5rem 0;position:relative;z-index:1}
-.hero h1{font-size:clamp(4rem,18vw,7rem);color:#2B1712}
-.hero .lead{font-size:1.15rem;max-width:30rem;margin-top:.4rem}
-.hero .eyebrow{color:#5A2A1E}
-.ridge{display:block;width:100%;height:auto;margin-top:-1rem}
-.ridge .far{fill:#A9472F}.ridge .near{fill:#6B2E22}.ridge .ground{fill:var(--plaster)}
-
-/* switch */
-.switch{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.4rem;position:relative;z-index:2}
-.switch button{font:inherit;cursor:pointer;text-align:start;border:2px solid var(--line);background:var(--plaster);color:var(--ink);border-radius:14px;padding:.8rem 1rem;display:flex;flex-direction:column;gap:.1rem}
-.switch b{font-family:var(--display);font-size:1.9rem;line-height:1}
-.switch small{color:var(--ink-soft);font-size:.9rem;line-height:1.3}
-.switch button[aria-pressed="true"]{border-color:var(--edom);background:var(--plaster-2);box-shadow:0 0 0 1px var(--edom) inset}
-body[data-unit="house"] [data-unit="studio"],body[data-unit="studio"] [data-unit="house"]{display:none}
-
-/* nav */
-nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--plaster);border-bottom:1px solid var(--line);margin-top:1.5rem}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--plaster)}
-nav.toc ul{list-style:none;margin:0;padding-block:.55rem;display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none}
-nav.toc a{display:block;white-space:nowrap;text-decoration:none;color:var(--ink);font-weight:600;font-size:.95rem;padding:.25rem .75rem;border-radius:999px;border:1px solid var(--line)}
-nav.toc a:hover{border-color:var(--edom);color:var(--edom)}
-
-main section{padding-block:2.75rem 0;display:flex;flex-direction:column;gap:1rem;scroll-margin-top:3.5rem}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.facts div{background:var(--plaster);padding:.75rem .9rem;display:flex;flex-direction:column}
-.facts span{font-size:.78rem;letter-spacing:.08em;color:var(--ink-soft);font-weight:700}
-.facts b{font-size:1.15rem;font-variant-numeric:tabular-nums}
-.facts small{font-size:.9rem;color:var(--ink-soft)}
-
-ol.route{margin:0;padding:0;list-style:none;counter-reset:r;display:flex;flex-direction:column;gap:.6rem}
-ol.route li{counter-increment:r;display:grid;grid-template-columns:2rem 1fr;gap:.6rem;align-items:start}
-ol.route li::before{content:counter(r);font-family:var(--display);font-size:1.6rem;line-height:1.1;color:var(--edom);text-align:center;border:1.5px solid var(--edom);border-radius:50%;width:2rem;height:2rem;line-height:1.85rem}
-.btnrow{display:flex;flex-wrap:wrap;gap:.5rem}
-.btn{display:inline-block;text-decoration:none;font-weight:700;background:var(--edom);color:var(--plaster);padding:.5rem 1rem;border-radius:10px}
-.btn.ghost{background:transparent;color:var(--edom);border:1.5px solid var(--edom)}
-
-figure{margin:0}
-figure img{display:block;width:100%;height:auto;border-radius:10px}
-figcaption{font-size:.88rem;color:var(--ink-soft);margin-top:.3rem}
-.photo-slot{border:2px dashed var(--line);border-radius:10px;padding:1.2rem;text-align:center;color:var(--ink-soft);font-size:.92rem}
-
-details{border-top:1px solid var(--line)}
-details:last-of-type{border-bottom:1px solid var(--line)}
-summary{cursor:pointer;list-style:none;padding:.8rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;font-weight:700;font-size:1.1rem}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";font-family:var(--display);font-size:1.8rem;line-height:1;color:var(--edom)}
-details[open] summary::after{content:"–"}
-details .body{padding-bottom:1rem;display:flex;flex-direction:column;gap:.6rem}
-details ul,section ul{margin:0;padding-inline-start:1.2rem;display:flex;flex-direction:column;gap:.25rem}
-
-.note{border-inline-start:4px solid var(--acacia);background:var(--plaster-2);padding:.75rem 1rem;border-radius:0 8px 8px 0}
-.warn{border-inline-start-color:var(--edom)}
-
-.places{display:flex;flex-direction:column;gap:0}
-.place{display:grid;grid-template-columns:1fr auto;gap:.15rem 1rem;padding:.75rem 0;border-bottom:1px solid var(--line)}
-.place h3{font-family:var(--body);font-size:1.08rem;font-weight:700}
-.place .dist{font-size:.85rem;color:var(--ink-soft);white-space:nowrap;font-variant-numeric:tabular-nums}
-.place p{grid-column:1/-1;color:var(--ink-soft);font-size:.98rem}
+a{color:var(--clay);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--clay);outline-offset:3px;border-radius:4px}
+.eyebrow{font-size:.82rem;letter-spacing:.14em;font-weight:700;color:var(--ink-soft)}
+.clock{display:flex;align-items:baseline;gap:.55rem;font-weight:700;letter-spacing:.12em;font-size:.8rem;color:var(--clay)}
+.clock b{font-family:var(--display);letter-spacing:0;font-size:1.5rem;font-variant-numeric:tabular-nums}
+.hand{font-family:var(--hand);font-weight:700;font-size:1.9rem;line-height:1;color:var(--clay)}
+.todo{background:#FCE9A6;color:#5A4300;padding:0 .3em;border-radius:3px;font-weight:600;font-size:.92em}
 .tel{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate;white-space:nowrap}
 
-.night{background:var(--night);color:var(--star);margin-top:3rem;position:relative;overflow:hidden}
-.night .wrap{padding-block:3rem;position:relative;z-index:1;display:flex;flex-direction:column;gap:1rem}
-.night h2{color:var(--star)}
-.night a{color:var(--star)}
-.night canvas{position:absolute;inset:0;width:100%;height:100%}
+/* dawn opener */
+.hero{background:linear-gradient(180deg,var(--dawn-1) 0%,var(--dawn-2) 65%,var(--dawn-3) 100%);position:relative;overflow:hidden}
+.hero .wrap{padding-block:max(2.2rem,env(safe-area-inset-top,0px)) 0;position:relative;z-index:2;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:end}
+.hero .txt{display:flex;flex-direction:column;gap:.7rem;min-width:0;padding-bottom:1.4rem}
+.hero h1{font-size:clamp(4.4rem,19vw,7.5rem);line-height:.82;color:var(--ink)}
+.hero h1 .l2{display:block;color:var(--clay)}
+.hero h1 .w{display:inline-block;white-space:nowrap}
+.hero h1 .ch{display:inline-block;animation:rise .9s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i)*60ms + 100ms)}
+.hero .lead{font-size:1.08rem;max-width:26rem}
+.hero .arch{width:clamp(7.5rem,30vw,12rem);aspect-ratio:3/4;border-radius:999px 999px 12px 12px;overflow:hidden;box-shadow:0 24px 40px -24px rgba(46,29,20,.6);margin-bottom:.6rem}
+.hero .arch img{width:100%;height:100%;object-fit:cover;display:block}
+.sun{position:absolute;z-index:1;width:clamp(110px,30vw,190px);aspect-ratio:1;border-radius:50%;inset-inline-end:-30px;top:30px;
+  background:radial-gradient(circle,#FFF4D6 0 55%,#FFD993 70%,rgba(255,217,147,0) 72%);filter:drop-shadow(0 0 36px rgba(255,214,140,.8))}
+.ridges{position:relative;height:clamp(70px,16vw,130px);margin-top:-2.4rem;z-index:1}
+.ridges svg{position:absolute;inset:auto 0 0 0;width:100%;height:100%}
+@keyframes rise{from{transform:translateY(.6em);opacity:0}to{transform:none;opacity:1}}
 
+/* switch */
+.switch{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.5rem}
+.switch button{font:inherit;cursor:pointer;text-align:start;border:2px solid var(--line);background:transparent;color:var(--ink);border-radius:18px;padding:.75rem 1rem;display:flex;flex-direction:column;gap:.15rem;transition:background .2s,border-color .2s}
+.switch b{font-family:var(--display);font-size:2.1rem;line-height:.95}
+.switch small{color:var(--ink-soft);font-size:.88rem;line-height:1.3}
+.switch button[aria-pressed="true"]{border-color:var(--clay);background:var(--clay);color:var(--cream)}
+.switch button[aria-pressed="true"] small{color:var(--cream);opacity:.85}
+body[data-unit="house"] [data-unit="studio"],body[data-unit="studio"] [data-unit="house"]{display:none}
+
+/* sticky nav */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sand)}
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--sand);border-bottom:1.5px solid var(--line);margin-top:1.2rem}
+nav.toc ul{list-style:none;margin:0;padding-block:.55rem;display:flex;gap:.4rem;overflow-x:auto;scrollbar-width:none}
+nav.toc a{display:block;white-space:nowrap;text-decoration:none;color:var(--ink);font-weight:700;font-size:.95rem;padding:.25rem .8rem;border-radius:999px;border:1.5px solid var(--line)}
+nav.toc a:hover{border-color:var(--clay);color:var(--clay)}
+
+main section{padding-block:3rem 0;display:flex;flex-direction:column;gap:1rem;scroll-margin-top:3.6rem}
+
+/* at a glance */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.6rem}
+.facts div{background:var(--sand-2);border-radius:14px;padding:.75rem .95rem;display:flex;flex-direction:column;min-width:0}
+.facts span{font-size:.76rem;letter-spacing:.1em;color:var(--ink-soft);font-weight:700}
+.facts b{font-family:var(--display);font-size:1.75rem;line-height:1.05;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.facts small{font-size:.9rem;color:var(--ink-soft)}
+
+/* route */
+ol.route{margin:0;padding:0;list-style:none;counter-reset:r;display:flex;flex-direction:column;gap:.7rem}
+ol.route li{counter-increment:r;display:grid;grid-template-columns:2.2rem 1fr;gap:.7rem;align-items:start}
+ol.route li::before{content:counter(r);font-family:var(--display);font-size:1.6rem;color:var(--cream);background:var(--clay);text-align:center;width:2.2rem;height:2.6rem;line-height:2.75rem;border-radius:999px 999px 6px 6px}
+.btnrow{display:flex;flex-wrap:wrap;gap:.5rem}
+.btn{display:inline-block;text-decoration:none;font-weight:700;background:var(--clay);color:var(--cream);padding:.55rem 1.1rem;border-radius:999px;border:2px solid var(--clay)}
+.btn.ghost{background:transparent;color:var(--clay)}
+
+figure{margin:0}
+figure img{display:block;width:100%;height:auto;border-radius:180px 180px 12px 12px}
+figcaption{font-size:.9rem;color:var(--ink-soft);margin-top:.4rem}
+.photo-slot{border:2px dashed var(--line);border-radius:999px 999px 12px 12px;padding:2.5rem 1.2rem;text-align:center;color:var(--ink-soft);font-size:.9rem}
+
+/* accordions */
+details{border-top:1.5px solid var(--line)}
+details:last-of-type{border-bottom:1.5px solid var(--line)}
+summary{cursor:pointer;list-style:none;padding:.85rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem;font-family:var(--display);font-weight:700;font-size:1.9rem;line-height:1}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:2.1rem;color:var(--clay);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details .body{padding-bottom:1.1rem;display:flex;flex-direction:column;gap:.6rem}
+details ul,section ul{margin:0;padding-inline-start:1.2rem;display:flex;flex-direction:column;gap:.3rem}
+section ul li::marker{color:var(--clay)}
+
+.note{background:var(--sand-2);padding:.8rem 1rem;border-radius:14px;border-inline-start:5px solid var(--ochre)}
+.warn{border-inline-start-color:var(--clay)}
+
+.places{display:flex;flex-direction:column}
+.place{display:grid;grid-template-columns:1fr auto;gap:.15rem 1rem;padding:.8rem 0;border-bottom:1.5px solid var(--line)}
+.place h3{font-size:1.75rem}
+.place .dist{font-size:.85rem;color:var(--ink-soft);white-space:nowrap;font-weight:700;align-self:center}
+.place p{grid-column:1/-1;color:var(--ink-soft);font-size:1rem}
+
+/* night band: stars, check-out, phones */
+.ridge{display:block;width:100%;height:clamp(50px,10vw,90px);margin-top:3rem}
+.night{background:var(--night);color:var(--star);position:relative;overflow:hidden}
+.night canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.night .wrap{position:relative;z-index:1}
+.night section{padding-block:2.6rem 0;display:flex;flex-direction:column;gap:1rem;scroll-margin-top:3.6rem}
+.night h2,.night .clock{color:var(--glow)}
+.night a{color:var(--glow)}
+.night .btn{background:var(--glow);border-color:var(--glow);color:var(--night)}
+.night .btn.ghost{background:transparent;color:var(--glow)}
+.night .note{background:rgba(244,231,201,.08)}
 .contacts{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-.contacts div{border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;display:flex;flex-direction:column;gap:.2rem}
-.contacts b{font-family:var(--display);font-size:2rem;line-height:1}
-.contacts .btnrow{margin-top:.3rem}
+.contacts>div{border:1.5px solid rgba(244,231,201,.25);border-radius:16px;padding:.9rem 1rem;display:flex;flex-direction:column;gap:.2rem}
+.contacts b{font-family:var(--display);font-size:2.4rem;line-height:1}
+.contacts .btnrow{margin-top:.4rem}
 @media (max-width:420px){.contacts{grid-template-columns:1fr}}
-.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.35rem}
-.checklist label{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer}
-.checklist input{margin-top:.45rem;accent-color:var(--edom);width:1.05rem;height:1.05rem;flex:none}
-footer{padding-block:3rem 3rem;color:var(--ink-soft);text-align:center}
-footer .sig{font-family:var(--display);font-size:2.4rem;color:var(--edom);line-height:1}
+.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5rem}
+.checklist label{display:flex;gap:.7rem;align-items:flex-start;cursor:pointer}
+.checklist input{margin-top:.4rem;accent-color:var(--glow);width:1.15rem;height:1.15rem;flex:none}
+.checklist input:checked+span,.checklist label:has(input:checked){opacity:.55;text-decoration:line-through}
+footer{padding-block:3rem 3.5rem;text-align:center;display:flex;flex-direction:column;gap:.3rem;opacity:.9}
+footer .sig{font-family:var(--hand);font-size:2.8rem;color:var(--glow);line-height:1}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
 <header class="hero">
+  <div class="sun" aria-hidden="true"></div>
   <div class="wrap">
-    <p class="eyebrow">צוקים · הערבה התיכונה</p>
-    <h1>בית ההמפ בצוקים</h1>
-    <p class="lead">איזה כיף שבאתם! כאן תמצאו את כל מה שצריך לפני שמגיעים ובזמן השהייה: איך נוסעים, איך הבית עובד, ומה כדאי לעשות במדבר.</p>
+    <div class="txt">
+      <p class="clock"><b>16:00</b> מגיעים לצוקים</p>
+      <h1 aria-label="ברוכים הבאים לצוקים"><span aria-hidden="true"><span class="w"><span class="ch" style="--i:0">ב</span><span class="ch" style="--i:1">ר</span><span class="ch" style="--i:2">ו</span><span class="ch" style="--i:3">כ</span><span class="ch" style="--i:4">י</span><span class="ch" style="--i:5">ם</span></span> <span class="w"><span class="ch" style="--i:6">ה</span><span class="ch" style="--i:7">ב</span><span class="ch" style="--i:8">א</span><span class="ch" style="--i:9">י</span><span class="ch" style="--i:10">ם</span></span><span class="l2"><span class="w"><span class="ch" style="--i:11">ל</span><span class="ch" style="--i:12">צ</span><span class="ch" style="--i:13">ו</span><span class="ch" style="--i:14">ק</span><span class="ch" style="--i:15">י</span><span class="ch" style="--i:16">ם</span></span></span></span></h1>
+      <p class="lead">כל מה שצריך לפני שמגיעים ובזמן השהייה: איך נוסעים, איך הכל עובד, ומה עושים במדבר.</p>
+      <p class="hand">איזה כיף שבאתם!</p>
+    </div>
+    <div class="arch"><img src="../assets/images/house-front.jpg" alt="חזית בית ההמפ בצוקים" width="1400" height="1050"></div>
   </div>
-  <svg class="ridge" viewBox="0 0 800 170" preserveAspectRatio="none" aria-hidden="true">
-    <circle cx="560" cy="88" r="38" fill="#FBE3B8"/>
-    <path class="far" d="M0 110 L70 86 L130 98 L210 62 L290 90 L360 72 L430 96 L520 70 L610 92 L700 66 L800 88 L800 170 L0 170Z"/>
-    <path class="near" d="M0 140 L120 128 L200 136 L320 116 L420 132 L470 126 L520 134 L640 120 L800 132 L800 170 L0 170Z"/>
-    <path class="ground" d="M0 160 L800 152 L800 170 L0 170Z"/>
-  </svg>
+  <div class="ridges" aria-hidden="true">
+    <svg viewBox="0 0 1200 200" preserveAspectRatio="none"><path style="fill:#C9785E" d="M0 200 L0 90 L110 60 L200 82 L300 30 L390 70 L480 48 L590 84 L700 40 L800 72 L900 52 L1010 86 L1100 44 L1200 70 L1200 200Z"/></svg>
+    <svg viewBox="0 0 1200 200" preserveAspectRatio="none"><path style="fill:#A94A35" d="M0 200 L0 120 L140 100 L260 128 L380 92 L520 124 L640 104 L760 136 L880 98 L1000 122 L1120 104 L1200 118 L1200 200Z"/></svg>
+    <svg viewBox="0 0 1200 200" preserveAspectRatio="none"><path style="fill:var(--sand)" d="M0 200 L0 170 L200 158 L420 172 L640 156 L860 170 L1060 160 L1200 166 L1200 200Z"/></svg>
+  </div>
 </header>
 
 <div class="wrap">
-  <p class="eyebrow" style="margin-top:1rem">איפה אתם מתארחים?</p>
+  <p class="eyebrow" style="margin-top:.4rem">איפה אתם מתארחים?</p>
   <div class="switch" role="group" aria-label="בחירת יחידה">
     <button type="button" id="pick-house" data-pick="house" aria-pressed="true"><b>הבית הגדול</b><small>4 חדרים, בריכה, עד 11 אורחים</small></button>
     <button type="button" id="pick-studio" data-pick="studio" aria-pressed="false"><b>סטודיו 36</b><small>יחידת הגג, 2 מרפסות, עד 4</small></button>
@@ -189,6 +205,7 @@ footer .sig{font-family:var(--display);font-size:2.4rem;color:var(--edom);line-h
 
   <!-- ===== arrival ===== -->
   <section id="arrive">
+    <p class="clock"><b>16:00</b> בדרך אלינו</p>
     <h2>איך מגיעים</h2>
     <ol class="route">
       <li><span>נכנסים לצוקים ועוברים את שער הישוב הצהוב.</span></li>
@@ -215,6 +232,7 @@ footer .sig{font-family:var(--display);font-size:2.4rem;color:var(--edom);line-h
 
   <!-- ===== how things work: HOUSE ===== -->
   <section id="home" data-unit="house">
+    <p class="clock"><b>16:30</b> מתמקמים</p>
     <h2>איך הבית עובד</h2>
     <p>בנינו את הבית במו ידינו מ<b>המפ</b> (קנבוס תעשייתי עם סיד), כשהיינו הבית הרביעי בארץ שנבנה כך. הקירות "נושמים": הם מבודדים ומווסתים לחות, ותרגישו את זה ברגע שתיכנסו. הטיח טבעי, אין רעלים, וגם חומרי הניקוי אקולוגיים.</p>
 
@@ -290,6 +308,7 @@ footer .sig{font-family:var(--display);font-size:2.4rem;color:var(--edom);line-h
 
   <!-- ===== how things work: STUDIO ===== -->
   <section id="home-studio" data-unit="studio">
+    <p class="clock"><b>16:30</b> מתמקמים</p>
     <h2 id="home-s">איך הסטודיו עובד</h2>
     <p>חלל אחד מואר של 40 מ״ר ועוד 30 מ״ר מרפסות, בקומה העליונה של הבית שבנינו בעצמנו מהמפ וחומרים טבעיים. ממרפסת אחת רואים את הזריחה מעל הרי אדום, ומהשנייה את השקיעה מעל הוואדי.</p>
     <div class="photo-slot">כאן תבואנה 2–3 תמונות של הסטודיו והמרפסות (<code>images/studio-1.jpg</code> וכו׳)</div>
@@ -321,6 +340,7 @@ footer .sig{font-family:var(--display);font-size:2.4rem;color:var(--edom);line-h
 
   <!-- ===== safety ===== -->
   <section id="safety">
+    <p class="clock"><b>24/7</b> חשוב לדעת</p>
     <h2>בטיחות במדבר</h2>
     <p class="note warn" data-unit="studio"><b>מרחב מוגן:</b> הממ״ד נמצא בבית שלנו בקומה למטה, משותף לנו ולכם. בתקופות מתוחות אנחנו משאירים את דלת הבית פתוחה, ופשוט נכנסים. בכל מקרה, כשיש אזעקה אנחנו רצים לפתוח לכם ומכוונים אתכם לממ״ד.</p>
     <p class="note warn" data-unit="house"><b>מרחב מוגן:</b> הממ״ד הוא חדר נפרד באזור חדרי הילדים, צמוד לחדר הכביסה. כשיש אזעקה נכנסים אליו וסוגרים את הדלת והחלון.</p>
@@ -341,6 +361,7 @@ footer .sig{font-family:var(--display);font-size:2.4rem;color:var(--edom);line-h
 
   <!-- ===== village ===== -->
   <section id="village">
+    <p class="clock"><b>שישי</b> בבוקר בכפר האמנים</p>
     <h2>צוקים, הישוב</h2>
     <p>צוקים נולד כמה קרוואנים על צוק באמצע המדבר. בהתחלה לא היו מדרכות, לא פנסי רחוב ולא תחנת דלק. כשעברנו לכאן ב־2013 וגרנו בקרוואן, עוד התווכחו בישוב אם להדליק תאורת רחוב בכלל, כי אנשים אהבו לראות כוכבים. לאט לאט נוספו צרכנייה, תחנת דלק, בית קפה, פיצה ואוכל הודי.</p>
     <p>מסתובבים בישוב ורואים בתים שנבנו בכל שיטה אפשרית. זה כמו תערוכה של בנייה, ורוב הבונים ישמחו לספר. (אנחנו חשבנו על הבית שלנו שלוש שנים לפני שהתחלנו.)</p>
@@ -351,6 +372,7 @@ footer .sig{font-family:var(--display);font-size:2.4rem;color:var(--edom);line-h
 
   <!-- ===== shop & eat ===== -->
   <section id="shop">
+    <p class="clock"><b>10:00</b> קניות</p>
     <h2>קניות ואוכל</h2>
     <div class="places">
       <div class="place"><h3>שושקה, הצרכנייה שלנו</h3><span class="dist">בכפר האמנים</span>
@@ -372,6 +394,7 @@ footer .sig{font-family:var(--display);font-size:2.4rem;color:var(--edom);line-h
 
   <!-- ===== things to do ===== -->
   <section id="todo">
+    <p class="clock"><b>17:00</b> שעה לפני השקיעה</p>
     <h2>מה עושים פה</h2>
     <p class="note"><b>חובה:</b> שעה לפני השקיעה יוצאים למדבר. מהבית זו דקת הליכה עד שפת הצוק, ומשם שביל יורד לוואדי צוקים. קחו מים, כי השקט של הוואדי מפתה להישאר.</p>
     <div class="places">
@@ -386,31 +409,31 @@ footer .sig{font-family:var(--display);font-size:2.4rem;color:var(--edom);line-h
   </section>
 </main>
 
-<section class="night" id="stars" aria-labelledby="stars-h">
+<svg class="ridge" viewBox="0 0 1200 100" preserveAspectRatio="none" aria-hidden="true"><path style="fill:var(--night)" d="M0 100 L0 44 L120 60 L240 36 L360 64 L470 50 L590 72 L700 40 L820 58 L930 30 L1050 62 L1200 48 L1200 100Z"/></svg>
+<div class="night" id="night">
   <canvas id="sky" aria-hidden="true"></canvas>
   <div class="wrap">
+  <section id="stars" aria-labelledby="stars-h">
+    <p class="clock"><b>22:00</b> לילה</p>
     <h2 id="stars-h">הלילה כאן</h2>
     <p>כבו את אורות החצר (המתגים בסלון), שכבו על הדק ותנו לעיניים עשר דקות להתרגל. בלילה בלי ירח רואים את שביל החלב.</p>
     <p><b>סיור כוכבים עם אלון מעין יהב:</b> חובב אסטרונומיה מגיל צעיר, עם לייזר, הסברים ותה ועוגיות לקטנים. היינו אצלו ונהנינו. <span class="tel">051-2470365</span></p>
     <p><b>ארז:</b> סיורי כוכבים וטיולי ג׳יפים, מומלץ מאוד. <span class="tel">052-3677317</span></p>
-  </div>
-</section>
-
-<main class="wrap">
+  </section>
   <section id="leave">
+    <p class="clock"><b>11:00</b> יום העזיבה</p>
     <h2>לפני שנוסעים</h2>
     <ul class="checklist">
-      <li><label><input type="checkbox" id="c1"> שוטפים כלים או מכניסים למדיח</label></li>
-      <li><label><input type="checkbox" id="c2"> מוציאים את הזבל לפח הירוק ליד החניה. רוצים למחזר? במטבח החוץ, ליד המנגל והטאבון, יש שני פחים: אחד לבקבוקים ואחד לנייר</label></li>
-      <li><label><input type="checkbox" id="c3"> מכבים אורות בחוץ ובפנים</label></li>
-      <li><label><input type="checkbox" id="c4"> <span data-unit="house">משאירים את המצנן דלוק, מכבים את המזגן המרכזי</span><span data-unit="studio">מכבים מזגן</span></label></li>
-      <li><label><input type="checkbox" id="c5"> משחקים חוזרים לקופסאות, כל החלקים</label></li>
-      <li><label><input type="checkbox" id="c6"> סוגרים חלונות ומחזירים את המפתח למקום: <span data-unit="house">מגירת התבלינים באי</span><span data-unit="studio">הקערה הטיבטית על אדן החלון</span></label></li>
+      <li><label><input type="checkbox" id="c1"> <span>שוטפים כלים או מכניסים למדיח</span></label></li>
+      <li><label><input type="checkbox" id="c2"> <span>מוציאים את הזבל לפח הירוק ליד החניה. רוצים למחזר? במטבח החוץ, ליד המנגל והטאבון, יש שני פחים: אחד לבקבוקים ואחד לנייר</span></label></li>
+      <li><label><input type="checkbox" id="c3"> <span>מכבים אורות בחוץ ובפנים</span></label></li>
+      <li><label><input type="checkbox" id="c4"> <span><span data-unit="house">משאירים את המצנן דלוק, מכבים את המזגן המרכזי</span><span data-unit="studio">מכבים מזגן</span></span></label></li>
+      <li><label><input type="checkbox" id="c5"> <span>משחקים חוזרים לקופסאות, כל החלקים</span></label></li>
+      <li><label><input type="checkbox" id="c6"> <span>סוגרים חלונות ומחזירים את המפתח למקום: <span data-unit="house">מגירת התבלינים באי</span><span data-unit="studio">הקערה הטיבטית על אדן החלון</span></span></label></li>
     </ul>
     <p data-unit="house">אם מתאים לכם, אפשר לפעמים להישאר עד 13:00. שאלו אותנו מראש.</p>
     <p>נהניתם? ביקורת באיירבנב עוזרת לנו מאוד, ואם משהו לא עבד, נשמח שתגידו לנו ישירות כדי שנתקן.</p>
   </section>
-
   <section id="contact">
     <h2>אנחנו כאן</h2>
     <div class="contacts">
@@ -420,12 +443,12 @@ footer .sig{font-family:var(--display);font-size:2.4rem;color:var(--edom);line-h
         <div class="btnrow"><a class="btn" href="https://wa.me/972523666260" target="_blank" rel="noopener">וואטסאפ</a><a class="btn ghost" href="tel:+972523666260">חיוג</a></div></div>
     </div>
   </section>
-</main>
-
-<footer class="wrap">
+  </div>
+  <footer class="wrap">
   <p class="sig">חיבוק גדול</p>
   <p>אסף, הילה, עדן, דביר והודיה</p>
 </footer>
+</div>
 
 <script>
 (function(){
@@ -442,17 +465,8 @@ footer .sig{font-family:var(--display);font-size:2.4rem;color:var(--edom);line-h
   addEventListener("hashchange",function(){var h=location.hash.slice(1);if(units.indexOf(h)>-1)setUnit(h)});
   document.querySelectorAll("[data-pick]").forEach(function(b){b.addEventListener("click",function(){setUnit(b.dataset.pick)})});
 
-  // a quiet field of stars
-  var c=document.getElementById("sky"),x=c.getContext("2d");
-  function draw(){
-    var r=c.getBoundingClientRect(),d=window.devicePixelRatio||1;
-    c.width=r.width*d;c.height=r.height*d;x.scale(d,d);
-    var n=Math.round(r.width*r.height/1800),s=7;
-    function rnd(){s=(s*16807)%2147483647;return s/2147483647}
-    for(var i=0;i<n;i++){x.globalAlpha=.25+rnd()*.6;x.fillStyle="#F4E7C9";x.beginPath();x.arc(rnd()*r.width,rnd()*r.height,rnd()*1.2+.2,0,6.3);x.fill()}
-  }
-  draw();addEventListener("resize",function(){x.setTransform(1,0,0,1,0,0);draw()});
 })();
 </script>
+<script src="../assets/sky.js" defer></script>
 </body>
 </html>
