@@ -40,8 +40,8 @@
 
 ## הקישורים לכל יחידה
 האתר אחד, והקישור קובע איזו יחידה נפתחת:
-- הבית הגדול: `https://stay.shushka.co.il/guide/#house`
-- סטודיו 36: `https://stay.shushka.co.il/guide/#studio`
+- הבית הגדול: `https://abokish.github.io/stay/guide/#house`
+- סטודיו 36: `https://abokish.github.io/stay/guide/#studio`
 
 ## הודעות וואטסאפ מוכנות
 
@@ -49,7 +49,7 @@
 ```
 היי! איזה כיף שאתם מגיעים אלינו לצוקים 🌵
 כל מה שצריך לדעת: איך מגיעים, איך הבית עובד, הבריכה, ומה עושים באזור:
-https://stay.shushka.co.il/guide/#house
+https://abokish.github.io/stay/guide/#house
 
 בבקשה העבירו את הקישור לכל מי שמגיע איתכם 🙏
 
@@ -63,7 +63,7 @@ https://stay.shushka.co.il/guide/#house
 ```
 היי! מחכים לכם בסטודיו 36 על הגג 🌅
 הוראות הגעה, Wi-Fi, הבריכה ומה עושים בערבה:
-https://stay.shushka.co.il/guide/#studio
+https://abokish.github.io/stay/guide/#studio
 
 שימו לב: יש 26 מדרגות עד היחידה. אם יש מזוודות כבדות, תגידו ונעזור.
 טיפ: שעה לפני השקיעה, דקת הליכה עד שפת הצוק ומשם למטה לוואדי.
