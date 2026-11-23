@@ -1,0 +1,35 @@
+/* Scroll tour: a full-screen photo stays pinned while short text cards
+   scroll up over it; each card swaps in its photo with a slow drift, so the
+   house plays like a quiet film as you scroll. Shared by the site and the guide. */
+.tour{position:relative;width:100vw;margin-inline:calc(50% - 50vw);background:#1d140e;color:#FFF1DF}
+.tour-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.tour-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.1s ease}
+.tour-slide.on{opacity:1}
+.tour-slide .blur{position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;filter:blur(28px) brightness(.55);display:none}
+.tour-slide .pic{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 60%}
+.tour-slide.on .pic{animation:tour-drift 14s ease-out both}
+@keyframes tour-drift{from{transform:scale(1.12) translate3d(1.5%,0,0)}to{transform:scale(1) translate3d(0,0,0)}}
+/* wide screens: show the whole photo over a blurred copy of itself */
+@media (min-aspect-ratio:1/1){
+  .tour-slide .blur{display:block}
+  .tour-slide.tall .pic{object-fit:contain}
+}
+.tour-stage::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,12,8,.55),rgba(20,12,8,0) 45%);pointer-events:none}
+.tour-steps{position:relative;z-index:1;margin-top:-100vh;margin-top:-100svh}
+.tour-step{min-height:88vh;min-height:88svh;display:flex;align-items:flex-end;justify-content:flex-start;padding:0 max(18px,env(safe-area-inset-left,0px)) 12vh}
+.tour-step:first-child{min-height:100vh;min-height:100svh}
+.tour-step:last-child{min-height:100vh;min-height:100svh;padding-bottom:45vh}
+.tour-card{max-width:22rem;background:rgba(32,21,14,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:18px;padding:1rem 1.2rem 1.1rem;box-shadow:0 20px 40px -20px rgba(0,0,0,.6)}
+.tour-card .n{font-weight:700;letter-spacing:.14em;font-size:.75rem;opacity:.75}
+.tour-card h3{font-family:"Karantina","Assistant",system-ui,sans-serif;font-weight:700;font-size:clamp(2.2rem,7vw,3rem);line-height:.95;margin:.15rem 0 .35rem}
+.tour-card p{margin:0;font-size:1rem;line-height:1.55}
+.tour-intro .tour-card{max-width:26rem}
+.tour-intro .tour-card h3{font-size:clamp(2.8rem,10vw,4.2rem)}
+.tour-dots{position:absolute;top:50%;inset-inline-end:10px;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;z-index:2}
+.tour-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,241,223,.4);transition:background .3s,transform .3s}
+.tour-dots i.on{background:#FFF1DF;transform:scale(1.4)}
+@media (min-width:900px){.tour-step{padding-inline:6vw}}
+@media (prefers-reduced-motion:reduce){
+  .tour-slide{transition:none}
+  .tour-slide.on .pic{animation:none}
+}
