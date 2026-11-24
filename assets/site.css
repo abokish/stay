@@ -126,6 +126,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var
 .pull{font-family:var(--display);font-size:clamp(2.4rem,6vw,3.8rem);line-height:1;color:var(--glow)}
 .story .hand{color:var(--glow);font-size:2.3rem}
 .story .arch{width:100%;max-width:24rem;justify-self:center}
+.story:not(:has(.arch)){grid-template-columns:minmax(0,44rem)}
 @media (max-width:760px){.story,.hero{grid-template-columns:1fr}.hero .arch{max-width:20rem}}
 
 /* ---------- DUSK / reviews ---------- */
